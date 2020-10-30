@@ -94,22 +94,15 @@ class ServiceNowAdapter extends EventEmitter {
    *   that handles the response.
    */
   healthcheck(callback) {
-    let callbackData = null;
-    let callbackError = null;
-
     this.getRecord((result, error) => {
       if (error) {
         log.error(`[id: ${this.id}]: Service is down or hibernating!`);
         this.emitOffline();
-        callbackError = error;
       } else {
         log.debug(`[id: ${this.id}]: Service is up and responding with no errors!`);
         this.emitOnline();
-        callbackData = result;        
       }
     });
-
-    callback(callbackData, callbackError);
   }
 
   /**
