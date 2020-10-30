@@ -152,28 +152,7 @@ class ServiceNowAdapter extends EventEmitter {
    *   handles the response.
    */
   getRecord(callback) {
-    this.connector.get((results, error) => {
-      if (error) {
-        callback(null, error);
-      } else {
-        const response = JSON.parse(results.body).result;
-        log.info('getRecord results: ' + JSON.stringify(response));
-        const firstItem = response[0];
-
-        const data = {
-          change_ticket_number: firstItem.number,
-          active: firstItem.active,
-          priority: firstItem.priority,
-          description: firstItem.description,
-          work_start: firstItem.work_start,
-          work_end: firstItem.work_end,
-          change_ticket_key: firstItem.sys_id,
-        };
-
-        log.info('getRecord returning: ' + JSON.stringify(data));
-        callback(data, null);
-      }
-    });
+    this.connector.get(callback);
   }
 
   /**
@@ -186,27 +165,7 @@ class ServiceNowAdapter extends EventEmitter {
    *   handles the response.
    */
   postRecord(callback) {
-    this.connector.post((result, error) => {
-      if (error) {
-        callback(null, error);
-      } else {
-        const response = JSON.parse(result.body).result;
-        log.info('postRecord result: ' + JSON.stringify(response));
-
-        const data = {
-          change_ticket_number: response.number,
-          active: response.active,
-          priority: response.priority,
-          description: response.description,
-          work_start: response.work_start,
-          work_end: response.work_end,
-          change_ticket_key: response.sys_id,
-        };
-
-        log.info('postRecord returning: ' + JSON.stringify(data));
-        callback(data, null);
-      }
-    });
+    this.connector.post(callback);
   }
 }
 
